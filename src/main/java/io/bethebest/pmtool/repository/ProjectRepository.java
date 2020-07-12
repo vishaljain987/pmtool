@@ -11,4 +11,8 @@ import io.bethebest.pmtool.model.Project;
 public interface ProjectRepository extends CrudRepository<Project, Long>{
 	public Project findByProjectIdentifier(String projectIdentifier);
 	
+	
+	public Iterable<Project> findAll();
+		
+	
 }
