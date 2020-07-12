@@ -29,6 +29,7 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 	
+	//make sure client passes valid object
 	@Autowired
 	private ValidationErrorMapService validationErrorMapService;
 	
