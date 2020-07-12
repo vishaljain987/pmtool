@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.bethebest.pmtool.model.Project;
 import io.bethebest.pmtool.service.ProjectService;
+import io.bethebest.pmtool.service.ValidationErrorMapService;
 
 @RestController
 @RequestMapping("/api/v1/project")
@@ -28,16 +29,14 @@ public class ProjectController {
 	@Autowired
 	private ProjectService projectService;
 	
+	@Autowired
+	private ValidationErrorMapService validationErrorMapService;
+	
 	@PostMapping("")
 	public ResponseEntity<?> createProject(@Valid @RequestBody Project project, BindingResult result){
-		if(result.hasErrors()){
-			
-			Map<String, String> errorMap = result.getFieldErrors()
-											.stream()
-											.collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage));
-			
-			return new ResponseEntity<Map<String, String>>(errorMap, HttpStatus.BAD_REQUEST);
-		}
+		ResponseEntity errorMap = validationErrorMapService.validationErrorMap(result);
+		if(errorMap!=null) return errorMap;
+		
 		Project newProject = projectService.saveOrUpdate(project);
 		return new ResponseEntity<Project>(newProject, HttpStatus.CREATED);
 		
