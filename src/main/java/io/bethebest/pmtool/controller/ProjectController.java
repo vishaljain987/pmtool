@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +42,14 @@ public class ProjectController {
 		
 		Project newProject = projectService.saveOrUpdate(project);
 		return new ResponseEntity<Project>(newProject, HttpStatus.CREATED);
+		
+	}
+	
+	@GetMapping("/{projectIdentifier}")
+	public ResponseEntity<?> findByProjectIdentifier(@PathVariable String projectIdentifier){
+		
+		Project project = projectService.findByProjectIdentifier(projectIdentifier);
+		return new ResponseEntity<Project>(project, HttpStatus.OK);
 		
 	}
 }

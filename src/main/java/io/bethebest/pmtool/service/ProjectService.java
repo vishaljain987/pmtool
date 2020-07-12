@@ -15,12 +15,21 @@ public class ProjectService {
 	
 	public Project saveOrUpdate(Project project){
 		//Logic
-		project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 		try{
+			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 			return projectRepository.save(project);
 		}catch(Exception e){
 			throw new ProjectIdException("Project Id '"+project.getProjectIdentifier()+"' already exists");
 		}
 		
+	}
+	
+	public Project findByProjectIdentifier(String projectIdentifier){
+		Project project = projectRepository.findByProjectIdentifier(projectIdentifier);
+		
+		if(project == null){
+			throw new ProjectIdException("Project does not exist");
+		}
+		return project;
 	}
 }
