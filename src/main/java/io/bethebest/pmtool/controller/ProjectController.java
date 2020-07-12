@@ -1,9 +1,12 @@
 package io.bethebest.pmtool.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +23,13 @@ public class ProjectController {
 	private ProjectService projectService;
 	
 	@PostMapping("")
-	public ResponseEntity<Project> createProject(@RequestBody Project project){
+	public ResponseEntity<?> createProject(@Valid @RequestBody Project project, BindingResult result){
+//		if(result.hasErrors()){
+//			System.out.println("************************Inside error***************************");
+//			return new ResponseEntity<String>("Bad Data", HttpStatus.BAD_REQUEST);
+//		}
 		Project newProject = projectService.saveOrUpdate(project);
-		return new ResponseEntity<Project>(project, HttpStatus.CREATED);
+		return new ResponseEntity<Project>(newProject, HttpStatus.CREATED);
 		
 	}
 }

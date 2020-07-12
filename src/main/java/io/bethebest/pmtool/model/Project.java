@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -26,7 +25,7 @@ public class Project {
 	private String projectName;
 	
 	@NotBlank(message="Project Identifier is required")
-	@Size(max=6, min=4, message="Please use 4 to 5 characters")
+	@Size(min=4, max=5, message="Please use 4 to 5 characters")
 	@Column(updatable=false, unique=true)
 	private String projectIdentifier;
 	
