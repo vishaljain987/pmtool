@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createProject } from './../../action/projectAction';
 
 class AddProject extends Component {
   constructor(props) {
@@ -29,12 +32,13 @@ class AddProject extends Component {
       end_date: this.state.end_date,
     };
 
-    console.log(newProject);
+    this.props.createProject(newProject, this.props.history);
   }
 
   render() {
     return (
       <div>
+        <h1>{this.props.errors.projectName}</h1>
         <div className="project">
           <div className="container">
             <div className="row">
@@ -106,4 +110,15 @@ class AddProject extends Component {
   }
 }
 
-export default AddProject;
+AddProject.propTypes = {
+  createProject: PropTypes.func.isRequired,
+  errors: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    errors: state.errors,
+  };
+};
+
+export default connect(mapStateToProps, { createProject })(AddProject);
