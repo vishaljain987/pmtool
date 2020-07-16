@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -24,9 +25,9 @@ public class Project {
 	@NotBlank(message="Project Name is required")
 	private String projectName;
 	
-	@NotBlank(message="Project Identifier is required")
-	@Size(min=4, max=5, message="Please use 4 to 5 characters")
-	@Column(updatable=false, unique=true)
+	@NotNull(message ="Project Identifier is required")
+    @Size(min=4, max=5, message = "Please use 4 to 5 characters")
+    @Column(updatable = false, unique = true)
 	private String projectIdentifier;
 	
 	@NotBlank(message="Project Description is required")
@@ -39,6 +40,7 @@ public class Project {
 	private Date end_date;
 	
 	@JsonFormat(pattern="yyyy-mm-dd")
+	@Column(updatable = false)
 	private Date created_At;
 	
 	@JsonFormat(pattern="yyyy-mm-dd")
