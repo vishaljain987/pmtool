@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import Header from './components/Layout/Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AddProject from './components/Project/AddProject';
+import UpdateProject from './components/Project/UpdateProject';
 
 function App() {
   return (
@@ -13,6 +14,11 @@ function App() {
         <Header />
         <Route exact path="/dashboard" component={Dashboard} />
         <Route exact path="/addProject" component={AddProject} />
+        <Route
+          exact
+          path="/updateProject/:projectIdentifier"
+          component={UpdateProject}
+        />
       </Router>
     </div>
   );
