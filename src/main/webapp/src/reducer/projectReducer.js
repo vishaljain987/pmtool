@@ -9,6 +9,14 @@ const projectReducer = (state = initailState, action) => {
       return { ...state, projects: action.payload };
     case projects.GET_PROJECT:
       return { ...state, project: action.payload };
+    case projects.DELETE_PROJECT:
+      return {
+        ...state,
+        projects: state.projects.filter(
+          (project) =>
+            project.projectIdentifier !== action.payload.projectIdentifier
+        ),
+      };
     default:
       return state;
   }

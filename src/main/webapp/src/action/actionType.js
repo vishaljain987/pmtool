@@ -6,4 +6,5 @@ export const errors = {
 export const projects = {
   GET_PROJECTS: 'GET_PROJECTS',
   GET_PROJECT: 'GET_PROJECT',
+  DELETE_PROJECT: 'DELETE_PROJECT',
 };
