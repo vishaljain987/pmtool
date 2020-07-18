@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.bethebest.pmtool.exception.ProjectIdException;
+import io.bethebest.pmtool.model.Backlog;
 import io.bethebest.pmtool.model.Project;
 import io.bethebest.pmtool.repository.ProjectRepository;
 
@@ -17,6 +18,12 @@ public class ProjectService {
 		//Logic
 		try{
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			if(project.getId()==null){
+				Backlog backlog = new Backlog();
+				project.setBacklog(backlog);
+				backlog.setProject(project);
+				backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			}
 			return projectRepository.save(project);
 		}catch(Exception e){
 			throw new ProjectIdException("Project Id '"+project.getProjectIdentifier()+"' already exists");

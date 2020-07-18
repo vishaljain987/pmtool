@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.bethebest.pmtool.model.Backlog;
 import io.bethebest.pmtool.model.Project;
+import io.bethebest.pmtool.service.BacklogService;
 import io.bethebest.pmtool.service.ProjectService;
 import io.bethebest.pmtool.service.ValidationErrorMapService;
 
@@ -32,6 +34,10 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	
+	@Autowired
+	private BacklogService backlogService;
 	
 	//make sure client passes valid object
 	@Autowired
@@ -70,9 +76,13 @@ public class ProjectController {
 	
 	@PutMapping("")
 	public ResponseEntity<?> updateProject(@Valid @RequestBody Project project, BindingResult result){
+		System.out.println("********1************");
 		ResponseEntity errorMap = validationErrorMapService.validationErrorMap(result);
+		System.out.println("********2************");
 		if(errorMap!=null) return errorMap;
-		
+		System.out.println("********3************"+errorMap);
+		Backlog backlog = backlogService.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+		project.setBacklog(backlog);
 		Project newProject = projectService.saveOrUpdate(project);
 		return new ResponseEntity<Project>(newProject, HttpStatus.OK);
 		
