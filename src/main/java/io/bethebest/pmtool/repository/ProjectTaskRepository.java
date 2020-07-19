@@ -9,5 +9,8 @@ import io.bethebest.pmtool.model.ProjectTask;
 
 @Repository
 public interface ProjectTaskRepository extends CrudRepository<ProjectTask, Long>{
+	
 	public List<ProjectTask> findByProjectIdentifierOrderByPriority(String projectIdentifier);
+	
+	public ProjectTask findByProjectSequence(String sequence);
 }
