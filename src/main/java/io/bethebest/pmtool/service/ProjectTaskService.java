@@ -93,4 +93,16 @@ public class ProjectTaskService {
 		}
 		return projectTask;
 	}
+	
+	public ProjectTask updateByProjectSequence(String projectIdentifier, String sequence, ProjectTask updatedProjectTask){
+		ProjectTask projectTask = this.findByProjectSequence(projectIdentifier, sequence);
+		projectTask = updatedProjectTask;
+		return projectTaskRepository.save(projectTask);
+	}
+	
+	public void deleteByProjectSequence(String projectIdentifier, String sequence){
+		ProjectTask projectTask = this.findByProjectSequence(projectIdentifier, sequence);
+		
+		projectTaskRepository.delete(projectTask);
+	}
 }

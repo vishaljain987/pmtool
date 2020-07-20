@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,5 +56,24 @@ public class BacklogController {
 		ProjectTask projectTask = projectTaskService.findByProjectSequence(projectIdentifier, sequence);
 		
 		return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK);
+	}
+	
+	@PutMapping("/{projectIdentifier}/{sequence}")
+	public ResponseEntity<?> updateProjectTaskBySequence(@PathVariable String projectIdentifier, @PathVariable String sequence, @Valid @RequestBody ProjectTask updatedProjectTask, BindingResult result){
+		
+		ResponseEntity errorMap = validationErrorMapService.validationErrorMap(result);
+		if(errorMap!=null) return errorMap;
+		
+		ProjectTask projectTask = projectTaskService.updateByProjectSequence(projectIdentifier, sequence, updatedProjectTask);
+		
+		return new ResponseEntity<ProjectTask>(projectTask, HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/{projectIdentifier}/{sequence}")
+	public ResponseEntity<?> deleteProjectTaskBySequence(@PathVariable String projectIdentifier, @PathVariable String sequence){
+		
+		projectTaskService.deleteByProjectSequence(projectIdentifier, sequence);
+		
+		return new ResponseEntity<String>("Project Task '"+sequence+"' deleted successfully", HttpStatus.OK);
 	}
 }
