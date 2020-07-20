@@ -12,7 +12,32 @@ class ProjectBoard extends Component {
   }
   render() {
     const { projectIdentifier } = this.props.match.params;
-    const { projectTasks } = this.props;
+    const { projectTasks, errors } = this.props;
+
+    let BoardContent;
+
+    const boardAlgorithm = (errors, project_tasks) => {
+      if (project_tasks.length < 1) {
+        if (errors.projectNotFound) {
+          return (
+            <div className="alert alert-danger text-center" role="alert">
+              {errors.projectNotFound}
+            </div>
+          );
+        } else {
+          return (
+            <div className="alert alert-info text-center" role="alert">
+              No Project Tasks on this board
+            </div>
+          );
+        }
+      } else {
+        return <Backlog projectTasks={project_tasks} />;
+      }
+    };
+
+    BoardContent = boardAlgorithm(errors, projectTasks);
+
     return (
       <div className="container">
         <Link
@@ -23,7 +48,7 @@ class ProjectBoard extends Component {
         </Link>
         <br />
         <hr />
-        <Backlog projectTasks={projectTasks} />
+        {BoardContent}
       </div>
     );
   }
@@ -37,6 +62,7 @@ ProjectBoard.propTypes = {
 const mapStateToProps = (state) => {
   return {
     projectTasks: state.backlog.projectTasks,
+    errors: state.errors,
   };
 };
 export default connect(mapStateToProps, { getBacklog })(ProjectBoard);
