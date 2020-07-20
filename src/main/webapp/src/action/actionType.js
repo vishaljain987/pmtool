@@ -8,3 +8,9 @@ export const projects = {
   GET_PROJECT: 'GET_PROJECT',
   DELETE_PROJECT: 'DELETE_PROJECT',
 };
+
+export const backlog = {
+  GET_BACKLOG: 'GET_BACKLOG',
+  GET_PROJECT_TASK: 'GET_PROJECT_TASK',
+  DELETE_PROJECT_TASK: 'DELETE_PROJECT_TASK',
+};
