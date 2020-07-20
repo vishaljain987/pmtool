@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { errors } from './actionType';
+import { errors, backlog } from './actionType';
 
 export const createProjectTask = (projectIdentifier, projectTask, history) => {
   return async (dispatch, getState) => {
@@ -10,5 +10,13 @@ export const createProjectTask = (projectIdentifier, projectTask, history) => {
     } catch (e) {
       dispatch({ type: errors.GET_ERROR, payload: e.response.data });
     }
+  };
+};
+
+export const getBacklog = (projectIdentifier) => {
+  return async (dispatch, getState) => {
+    const result = await axios.get(`/api/v1/backlog/${projectIdentifier}`);
+
+    dispatch({ type: backlog.GET_BACKLOG, payload: result.data });
   };
 };
