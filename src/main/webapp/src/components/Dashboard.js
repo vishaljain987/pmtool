@@ -7,6 +7,7 @@ import { getProjects } from './../action/projectAction';
 
 class Dashboard extends Component {
   componentDidMount() {
+    console.log('Inside Dashboard componentDidMount');
     this.props.getProjects();
   }
   render() {

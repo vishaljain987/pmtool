@@ -12,7 +12,12 @@ const backlogReducer = (state = initialState, action) => {
         projectTasks: action.payload,
       };
     case backlog.DELETE_PROJECT_TASK:
-      return { ...state };
+      return {
+        ...state,
+        projectTasks: state.projectTasks.filter(
+          (pt) => pt.projectSequence !== action.payload
+        ),
+      };
     default:
       return state;
   }

@@ -44,3 +44,16 @@ export const updateProjectTask = (
     }
   };
 };
+
+export const deleteProjectTask = (projectIdentifier, projectSequence) => {
+  return async (dispatch, getState) => {
+    try {
+      await axios.delete(
+        `/api/v1/backlog/${projectIdentifier}/${projectSequence}`
+      );
+      dispatch({ type: backlog.DELETE_PROJECT_TASK, payload: projectSequence });
+    } catch (e) {
+      dispatch({ type: errors.GET_ERROR, payload: e.response.data });
+    }
+  };
+};

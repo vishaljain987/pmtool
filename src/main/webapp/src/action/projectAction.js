@@ -27,7 +27,8 @@ export const updateProject = (project, history) => {
 export const getProjects = () => {
   return async (dispatch, getState) => {
     const result = await axios.get('/api/v1/project');
-
+    console.log('inside getProjects');
+    console.log(result);
     dispatch({ type: projects.GET_PROJECTS, payload: result.data });
   };
 };
