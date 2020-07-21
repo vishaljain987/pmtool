@@ -56,7 +56,7 @@ class ProjectBoard extends Component {
 
 ProjectBoard.propTypes = {
   getBacklog: PropTypes.func.isRequired,
-  projectTasks: PropTypes.object.isRequired,
+  projectTasks: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = (state) => {
